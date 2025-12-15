@@ -3,9 +3,13 @@
 #include <string.h>
 #include <stdbool.h>
 
-char* readFile(char* file_name){
-	FILE *in = fopen(file_name, "r");
-
+char* readFile(char* filename){
+	FILE *in = fopen(filename, "r");
+	if (in == NULL) {
+		printf("Failed to open file %s.\n", filename);
+		return NULL;
+	}
+	
 	size_t content_size = 0;
 	size_t last = 0;
 	size_t len = 0;
@@ -96,9 +100,13 @@ long long sumPatterns(long long start, long long end) {
 	return sum;	
 }
 
-long long partOne() {
+long long partOne(char *filename) {
 	long long res = 0;
-	char *input = readFile("input");
+	char *input = readFile(filename);
+	if (input == NULL) {
+		puts("Failed to read input.");
+		return 0;
+	}
 
 	char *match = strtok(input, "-");
 	while (match != NULL) {
@@ -112,10 +120,14 @@ long long partOne() {
 	return res;
 }
 
-long long partTwo() {
+long long partTwo(char *filename) {
 	long long res = 0;
-	char *input = readFile("input");
-
+	char *input = readFile(filename);
+	if (input == NULL) {
+		puts("Failed to read input.");
+		return 0;
+	}
+	
 	char *match = strtok(input, "-");
 	while (match != NULL) {
 		long long start = atoll(match);
@@ -128,9 +140,14 @@ long long partTwo() {
 	return res;
 }
 
-int main() {
-	long long p1 = partOne();
-	long long p2 = partTwo();
+int main(int argc, char **argv) {
+	if (argc < 2) {
+		puts("Please provide a file name.");
+		return 1;
+	}
+	
+	long long p1 = partOne(argv[1]);
+	long long p2 = partTwo(argv[1]);
 	printf("Part 1 Result: %20lld\n", p1);
 	printf("Part 2 Result: %20lld\n", p2);
 	return 0;

@@ -11,7 +11,7 @@ int stripNewline(char *buff, int buff_size) {
 	return -1;
 }
 
-long long maxJoltageTwelve(int n, char *bank, int bank_size){
+long long maxJoltage(int n, char *bank, int bank_size){
 	int *digits = malloc(n * sizeof(int));
 	long long sum = 0LL;
 	int current = 0;
@@ -37,12 +37,22 @@ long long maxJoltageTwelve(int n, char *bank, int bank_size){
 	return sum;
 }
 
-int main(){
+int main(int argc, char **argv){
+	if (argc < 2) {
+		puts("Please provide a filename.");
+		return 1;
+	}
+	
 	int sum2 = 0;
 	long long sum12 = 0;
 	
 	char bank[102];
-	FILE *input = fopen("input", "r");
+	FILE *input = fopen(argv[1], "r");
+	if (input == NULL) {
+		printf("Failed to open file %s\n", argv[1]);
+		return 1;
+	}
+	
 	while (fgets(bank, sizeof(bank), input)) {
 		int bank_size = stripNewline(bank, sizeof(bank));
 		sum2 += maxJoltage(2, bank, bank_size);

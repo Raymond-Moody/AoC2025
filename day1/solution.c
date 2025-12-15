@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void partOne(){
-	FILE *input = fopen("input", "r");
+void partOne(char *filename){
+	FILE *input = fopen(filename, "r");
+	if (input == NULL) {
+		printf("Failed to open file %s.\n", filename);
+		return;
+	}
+		
 	char buffer[10];
 	char direction = '\0';
 	int current = 50;
@@ -38,8 +43,13 @@ void partOne(){
 	printf("Password: %d\n", password);
 }
 
-void partTwo(){
-	FILE *input = fopen("input", "r");
+void partTwo(char *filename){
+	FILE *input = fopen(filename, "r");
+	if (input == NULL) {
+		printf("Failed to open file %s.\n", filename);
+		return;
+	}
+	
 	char buffer[10];
 	char direction = '\0';
 	int current = 50;
@@ -78,8 +88,13 @@ void partTwo(){
 	printf("Method 0x434C49434B Password: %d\n", password);
 }
 
-int main(){
-	partOne();
-	partTwo();
+int main(int argc, char **argv){
+	if (argc < 2) {
+		puts("Please provide a file name.");
+		return 1;
+	}
+	
+	partOne(argv[1]);
+	partTwo(argv[1]);
 	return 0;
 }
