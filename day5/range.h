@@ -9,9 +9,11 @@ struct range_ {
 };
 
 int range_contains(range*, long long);
+int range_overlaps(range*, range*);
 
 struct range_list_node_ {
 	struct range_list_node_ *next;
+	struct range_list_node_ *prev;
 	range r;
 };
 

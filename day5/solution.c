@@ -6,7 +6,7 @@
 int countFresh(char *filename){
 	int count = 0;
 	char buffer[64];
-	
+
 	FILE *input = fopen(filename, "r");
 	if (input == NULL) {
 		printf("Failed to open file %s.\n", filename);
@@ -30,7 +30,43 @@ int countFresh(char *filename){
 		if (rl_contains(ranges, id))
 			count++;
 	}
+
+	fclose(input);
 	rl_destroy(&ranges);
+	return count;
+}
+
+long long totalFresh(char *filename) {
+	long long count = 0;
+	char buffer[64];
+
+	FILE *input = fopen(filename, "r");
+	if (input == NULL) {
+		printf("Failed to open file %s.\n", filename);
+		return 0;
+	}
+
+	range_list *ranges = rl_create();
+	while (fgets(buffer, sizeof(buffer), input) != NULL) {
+		if (buffer[0] == '\n')
+			break;
+		char *start_str = strtok(buffer, "-");
+		long long start = atoll(start_str);
+		char *end_str = strtok(NULL, "-");
+		long long end = atoll(end_str);
+
+		rl_insert(ranges, start, end);
+	}
+	fclose(input);
+
+	for (
+		 struct range_list_node_ *current = ranges->head;
+		 current != NULL;
+		 current = current->next)
+	{
+		count += current->r.end - current->r.start + 1;
+	}
+
 	return count;
 }
 
@@ -41,6 +77,8 @@ int main(int argc, char **argv) {
 	}
 
 	int fresh = countFresh(argv[1]);
+	long long total = totalFresh(argv[1]);
 	printf("There are %d fresh ingredients.\n", fresh);
+	printf("There are %lld total fresh IDs.\n", total);
 	return 0;
 }
