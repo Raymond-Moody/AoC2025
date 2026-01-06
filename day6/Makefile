@@ -6,7 +6,7 @@ all: main.o
 	$(CC) $(CC_FLAGS) main.o -o $(OUTPUT)
 
 main.o:
-	$(CC) $(CC_FLAGS) -c solution.c -o main.o
+	$(CC) $(CC_FLAGS) -c main.c -o main.o
 
 clean:
 	rm *.o $(OUTPUT)

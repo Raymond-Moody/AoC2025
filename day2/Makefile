@@ -1,8 +1,12 @@
-all: solution.o
-	gcc solution.o -o Solution
+CC = clang
+CC_FLAGS = -g -Wall -Werror
+OUTPUT = Solution
 
-solution.o:
-	gcc -c solution.c -o solution.o
+all: main.o
+	$(CC) $(CC_FLAGS) main.o -o $(OUTPUT)
+
+main.o:
+	$(CC) $(CC_FLAGS) -c solution.c -o main.o
 
 clean:
-	rm solution.o Solution
+	rm *.o $(OUTPUT)

@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 CC_FLAGS = -g -Wall -Werror
 
 all: solution.o range.o
