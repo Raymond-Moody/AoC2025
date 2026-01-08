@@ -19,13 +19,9 @@
           }
           {
             packages = with pkgs; [
-              #	    libgcc
               clang-tools
               gdb
             ];
-            shellHook = ''
-              	    export PS1="\e[1;32m[nix-dev]$\e[0m "
-              	  '';
           };
     };
 }
